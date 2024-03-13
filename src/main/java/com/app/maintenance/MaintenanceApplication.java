@@ -10,10 +10,10 @@ public class MaintenanceApplication {
         SpringApplication.run(MaintenanceApplication.class, args);
     }
 
-    @Bean
-    public CommandLineRunner commandLineRunner(AppCommandLineRunner appCommandLineRunner) {
-        return args -> appCommandLineRunner.run(args);
-    }
+//    @Bean
+//    public CommandLineRunner commandLineRunner(AppCommandLineRunner appCommandLineRunner) {
+//        return args -> appCommandLineRunner.run(args);
+//    }
 }
 
 

@@ -10,4 +10,5 @@ public interface UserServiceInterface {
     Optional<User> getUser(Long id);
     List<User> getAllUsers();
     void deleteUser(Long id);
+    User updateUser(User user);
 }

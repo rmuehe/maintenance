@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>User Management</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" th:href="@{/styless.css}">
+    <!-- GOOGLE FONT: LATO -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap"
+          rel="stylesheet"
+          th:href="@{https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap}">
+</head>
+<body>
+<!-- INLINE STYLE -->
+<!-- JPEG -->
+<header th:style="'background-image: url('generic_banner.jpg')'">
+    <!-- NAVIGATION FROM  -->
+    <nav>
+        <ul>
+            <!-- 3 PAGES -->
+            <li><a href="users.html">User Management</a></li>
+            <li><a href="products.html">Product Management</a></li>
+            <li><a href="manufacturers.html">Manufacturer Management</a></li>
+        </ul>
+    </nav>
+</header>
+
+<button id="darkModeToggle">Toggle Dark Mode</button>
+
+<h1>User Management</h1>
+<!-- FORM -->
+<form id="userForm" th:action="@{${users != null ? 'users/edit' : '/users/add'}}" th:object="${user}" method="post">
+    <input type="hidden" name="_method" th:value="${user != null ? 'put' : 'post'}" />
+    <label for="name">Name:</label>
+    <input type="text" id="name" th:field="*{name}" required><br>
+    <div th:if="${#fields.hasErrors('name')}" th:errors="*{contactInfo}">Name Error</div>
+    <label for="contactInfo">Email:</label>
+    <!-- REGEX VALIDATION -->
+    <input type="email" id="contactInfo" th:field="*{contactInfo}"
+           pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
+           title="Please enter a valid email address." required>
+    <div class="error" th:if="${#fields.hasErrors('contactInfo')}" th:errors="*{contactInfo}">Email Error</div>
+
+    <label for="loginCredentials">Login Credentials:</label>
+    <input type="password" id="loginCredentials" th:field="*{loginCredentials}" required><br>
+
+    <label for="role">Role:</label>
+    <!-- DROPDOWN -->
+    <select id="role" th:field="*{role}">
+        <option th:each="role : ${T(com.app.maintenance.model.Role).values()}" th:value="${role}" th:text="${role}">Role</option>
+    </select><br>
+    <button type="submit" th:text="${user != null ? 'Update User' : 'Add User'}">Submit</button>
+</form>
+<button id="clearLocalStorage">Clear Data</button>
+
+</br></br>
+
+<h2>User List</h2>
+<!-- HTML TABLE -->
+<table id="userTable">
+    <thead>
+    <tr th:each="user : ${users}">
+        <td th:text="${user.name}">Name</td>
+        <td th:text="${user.contactInfo}">Email</td>
+        <td th:text="${user.loginCredentials}">Login Credentials</td>
+        <td th:text="${user.role}">Role</td>
+    </tr>
+    </thead>
+    <tbody>
+    <!-- Thymeleaf will add user rows here -->
+    </tbody>
+</table>
+
+<script th:src="@{script.js}"></script>
+</body>
+</html>

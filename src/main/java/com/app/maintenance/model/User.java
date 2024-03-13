@@ -31,5 +31,6 @@ public class User {
 
     @OneToMany(mappedBy = "owner") // Establishes a one-to-many relationship between users and items
     private List<Item> ownedItems; // owner of the item
+
 }
 
